@@ -15,7 +15,7 @@ class Pet extends Model
     public $timestamps = false;
     protected $hidden = ['deleted_at'];
     protected $fillable = [
-        'name', 'age', 'species', 'breed', 'owner'
+        'name', 'age', 'species', 'breed', 'owner_id'
     ];
     protected $casts = [
         'age' => 'integer',
