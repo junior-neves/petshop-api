@@ -14,4 +14,24 @@ class OwnerController extends Controller
         $this->class = Owner::class;
     }
 
+    public function store(Request $request): Response
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'phone' => 'required'
+        ]);
+
+        return parent::store($request);
+    }
+
+    public function update(Request $request, $id): Response
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'phone' => 'required'
+        ]);
+
+        return parent::update($request, $id);
+    }
+
 }
