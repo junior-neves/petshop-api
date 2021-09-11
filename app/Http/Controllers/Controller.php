@@ -18,11 +18,7 @@ abstract class Controller extends BaseController
 
     public function store(Request $request) : Response
     {
-        $owner = $this->class::create([
-            'name' => $request->name,
-            'phone' => $request->phone,
-
-        ]);
+        $owner = $this->class::create($request->all());
 
         return Response($owner,200);
     }
@@ -35,7 +31,7 @@ abstract class Controller extends BaseController
             return Response([],404);
         }
 
-        return Response([$owner],200);
+        return Response($owner,200);
     }
 
 
@@ -50,7 +46,7 @@ abstract class Controller extends BaseController
         $owner->fill($request->all());
         $owner->save();
 
-        return Response([$owner],200);
+        return Response($owner,200);
     }
 
 
