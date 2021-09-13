@@ -6,25 +6,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet;
+use App\Repositories\Contracts\PetRepositoryInterface;
+use App\Repositories\PetRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Laravel\Lumen\Routing\Controller;
 
 class PetController extends Controller
 {
+    private PetRepository $petRepository;
 
-    public function __construct()
+    public function __construct(PetRepositoryInterface $petRepository)
     {
-        $this->class = Pet::class;
+        $this->petRepository = $petRepository;
     }
-
 
     public function index() : Response
     {
-        $pets = Pet::orderBy('name')
-            ->with("owner")
-            ->get();
-        $pets->makeHidden('owner_id');
+        $pets = $this->petRepository->all();
         return Response($pets, 200);
+    }
+
+    public function show($id) : Response
+    {
+        $pet = $this->petRepository->findById($id);
+        if (!$pet) {
+            return Response([],404);
+        }
+
+        return Response($pet,200);
     }
 
     public function store(Request $request): Response
@@ -37,7 +47,8 @@ class PetController extends Controller
             'owner_id' => 'required|integer',
         ]);
 
-        return parent::store($request);
+        $pet = $this->petRepository->insert($request);
+        return Response($pet,200);
     }
 
     public function update(Request $request, $id): Response
@@ -50,7 +61,20 @@ class PetController extends Controller
             'owner_id' => 'required',
         ]);
 
-        return parent::update($request, $id);
+        $pet = $this->petRepository->update($request, $id);
+
+        return Response($pet,200);
+    }
+
+    public function destroy($id) : Response
+    {
+        $pet = $this->petRepository->delete($id);
+
+        if (!$pet) {
+            return Response([],404);
+        }
+
+        return Response([],200);
     }
 
 }
