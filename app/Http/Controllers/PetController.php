@@ -2,7 +2,6 @@
 
 //TODO: Criar uma verificação se a espécie do animal está na lista de espécieis possíveis
 //TODO: Validar se o id do owner que está vindo é válido
-//TODO: Voltar o objeto Owner ao invés do ID dele
 
 namespace App\Http\Controllers;
 
@@ -18,6 +17,15 @@ class PetController extends Controller
         $this->class = Pet::class;
     }
 
+
+    public function index() : Response
+    {
+        $pets = Pet::orderBy('name')
+            ->with("owner")
+            ->get();
+        $pets->makeHidden('owner_id');
+        return Response($pets, 200);
+    }
 
     public function store(Request $request): Response
     {
