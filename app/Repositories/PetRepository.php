@@ -5,17 +5,15 @@ namespace App\Repositories;
 use App\Models\Pet;
 use App\Repositories\Contracts\PetRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Integer;
 
 class PetRepository implements PetRepositoryInterface
 {
-    public function all() : Collection
+    public function all() : ?Collection
     {
         $pets = Pet::orderBy('name')
             ->with("owner")
-            ->get();
-        $pets->makeHidden('owner_id');
+            ->get()
+            ->makeHidden('owner_id');
         return $pets;
     }
 
@@ -24,19 +22,19 @@ class PetRepository implements PetRepositoryInterface
         return Pet::find($id);
     }
 
-    public function insert(Request $request) : ?Pet
+    public function insert(array $petInfo) : ?Pet
     {
-        return Pet::create($request->all());
+        return Pet::create($petInfo);
     }
 
-    public function update(Request $request, $petId) : ?Pet
+    public function update(int $petId, array $petInfo) : ?Pet
     {
         $pet = Pet::where('id', $petId)->firstOrFail();
-        $pet->update($request->all());
+        $pet->update($petInfo);
         return $pet;
     }
 
-    public function delete($petId) : ?int
+    public function delete(int $petId) : bool
     {
         $pet = Pet::where('id', $petId)->delete();
         return $pet;

@@ -7,29 +7,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Pet;
 use App\Repositories\Contracts\PetRepositoryInterface;
-use App\Repositories\PetRepository;
+use App\Services\PetService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Routing\Controller;
 
 class PetController extends Controller
 {
-    private PetRepository $petRepository;
+    private PetService $petService;
 
-    public function __construct(PetRepositoryInterface $petRepository)
+    public function __construct(PetService $petService)
     {
-        $this->petRepository = $petRepository;
+        $this->petService = $petService;
     }
 
     public function index() : Response
     {
-        $pets = $this->petRepository->all();
+        $pets = $this->petService->getAllPets();
         return Response($pets, 200);
     }
 
     public function show($id) : Response
     {
-        $pet = $this->petRepository->findById($id);
+        $pet = $this->petService->getPetById($id);
         if (!$pet) {
             return Response([],404);
         }
@@ -47,7 +47,7 @@ class PetController extends Controller
             'owner_id' => 'required|integer',
         ]);
 
-        $pet = $this->petRepository->insert($request);
+        $pet = $this->petService->createPet($request->all());
         return Response($pet,200);
     }
 
@@ -61,14 +61,14 @@ class PetController extends Controller
             'owner_id' => 'required',
         ]);
 
-        $pet = $this->petRepository->update($request, $id);
+        $pet = $this->petService->updatePet($id, $request->all());
 
         return Response($pet,200);
     }
 
     public function destroy($id) : Response
     {
-        $pet = $this->petRepository->delete($id);
+        $pet = $this->petService->destroyPet($id);
 
         if (!$pet) {
             return Response([],404);
