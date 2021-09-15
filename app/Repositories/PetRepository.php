@@ -11,9 +11,10 @@ class PetRepository implements PetRepositoryInterface
     public function all() : ?Collection
     {
         $pets = Pet::orderBy('name')
+            ->with("species")
             ->with("owner")
             ->get()
-            ->makeHidden('owner_id');
+            ->makeHidden(["owner_id", "species_id"]);
         return $pets;
     }
 

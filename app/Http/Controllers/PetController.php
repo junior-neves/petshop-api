@@ -1,12 +1,11 @@
 <?php
 
-//TODO: Criar uma verificação se a espécie do animal está na lista de espécieis possíveis
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PetRequest;
 use App\Services\PetService;
 use App\Services\OwnerService;
+use App\Services\SpeciesService;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Routing\Controller;
 
@@ -14,11 +13,13 @@ class PetController extends Controller
 {
     private PetService $petService;
     private OwnerService $ownerService;
+    private SpeciesService $speciesService;
 
-    public function __construct(PetService $petService, OwnerService $ownerService)
+    public function __construct(PetService $petService, OwnerService $ownerService, SpeciesService $speciesService)
     {
         $this->petService = $petService;
         $this->ownerService = $ownerService;
+        $this->speciesService = $speciesService;
     }
 
     public function index() : Response
@@ -41,6 +42,9 @@ class PetController extends Controller
     {
         $owner = $this->ownerService->findOrCreateOwnerByNameAndPhone($request->owner_name, $request->owner_phone);
         $request->merge(["owner_id" => $owner->id]);
+
+        $species = $this->speciesService->getSpeciesById($request->species);
+        $request->merge(["species_id" => $species->id]);
 
         $pet = $this->petService->createPet($request->all());
 
