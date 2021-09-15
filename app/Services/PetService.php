@@ -4,8 +4,9 @@ namespace App\Services;
 
 use App\Exceptions\PetNotFoundException;
 use App\Repositories\Contracts\PetRepositoryInterface;
+use App\Services\Contracts\PetServiceInterface;
 
-class PetService
+class PetService implements PetServiceInterface
 {
     protected PetRepositoryInterface $petRepository;
 
