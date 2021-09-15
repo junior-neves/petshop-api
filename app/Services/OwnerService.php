@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\OwnerRepositoryInterface;
+use App\Services\Contracts\OwnerServiceInterface;
 
-class OwnerService
+class OwnerService implements OwnerServiceInterface
 {
     protected OwnerRepositoryInterface $ownerRepository;
 
