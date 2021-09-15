@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\PetNotFoundException;
 use App\Repositories\Contracts\PetRepositoryInterface;
 
 class PetService
@@ -30,7 +31,11 @@ class PetService
 
     public function updatePet(int $petId, array $petInfo) : object
     {
-        return $this->petRepository->update($petId, $petInfo);
+        $pet = $this->petRepository->update($petId, $petInfo);
+        if (!isset($pet)) {
+            throw new PetNotFoundException($pet);
+        }
+        return $pet;
     }
 
     public function destroyPet(int $petId) : bool
