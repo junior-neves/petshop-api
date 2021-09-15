@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PetRequest;
-use App\Services\PetService;
-use App\Services\OwnerService;
-use App\Services\SpeciesService;
+use App\Services\Contracts\OwnerServiceInterface;
+use App\Services\Contracts\PetServiceInterface;
+use App\Services\Contracts\SpeciesServiceInterface;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Routing\Controller;
 
 class PetController extends Controller
 {
-    private PetService $petService;
-    private OwnerService $ownerService;
-    private SpeciesService $speciesService;
+    private PetServiceInterface $petService;
+    private OwnerServiceInterface $ownerService;
+    private SpeciesServiceInterface $speciesService;
 
-    public function __construct(PetService $petService, OwnerService $ownerService, SpeciesService $speciesService)
+    public function __construct(PetServiceInterface $petService, OwnerServiceInterface $ownerService, SpeciesServiceInterface $speciesService)
     {
         $this->petService = $petService;
         $this->ownerService = $ownerService;
