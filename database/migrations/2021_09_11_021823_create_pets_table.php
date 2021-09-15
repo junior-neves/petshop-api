@@ -17,12 +17,13 @@ class CreatePetsTable extends Migration
             $table->bigIncrements('id');
             $table->string("name");
             $table->integer("age");
-            $table->tinyInteger("species");
+            $table->unsignedBigInteger("species_id");
             $table->string("breed");
             $table->unsignedBigInteger("owner_id");
             $table->softDeletes();
 
             $table->foreign('owner_id')->references('id')->on('owners');
+            $table->foreign('species_id')->references('id')->on('species');
         });
     }
 
