@@ -1,24 +1,24 @@
 <?php
 
 //TODO: Criar uma verificação se a espécie do animal está na lista de espécieis possíveis
-//TODO: Validar se o id do owner que está vindo é válido
 
 namespace App\Http\Controllers;
 
-use App\Models\Pet;
-use App\Repositories\Contracts\PetRepositoryInterface;
+use App\Http\Requests\PetRequest;
 use App\Services\PetService;
-use Illuminate\Http\Request;
+use App\Services\OwnerService;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Routing\Controller;
 
 class PetController extends Controller
 {
     private PetService $petService;
+    private OwnerService $ownerService;
 
-    public function __construct(PetService $petService)
+    public function __construct(PetService $petService, OwnerService $ownerService)
     {
         $this->petService = $petService;
+        $this->ownerService = $ownerService;
     }
 
     public function index() : Response
@@ -37,29 +37,20 @@ class PetController extends Controller
         return Response($pet,200);
     }
 
-    public function store(Request $request): Response
+    public function store(PetRequest $request): Response
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'age' => 'required|integer',
-            'species' => 'required|integer',
-            'breed' => 'required',
-            'owner_id' => 'required|integer',
-        ]);
+        $owner = $this->ownerService->findOrCreateOwnerByNameAndPhone($request->owner_name, $request->owner_phone);
+        $request->merge(["owner_id" => $owner->id]);
 
         $pet = $this->petService->createPet($request->all());
+
         return Response($pet,200);
     }
 
-    public function update(Request $request, $id): Response
+    public function update(PetRequest $request, $id): Response
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'age' => 'required',
-            'species' => 'required',
-            'breed' => 'required',
-            'owner_id' => 'required',
-        ]);
+        $owner = $this->ownerService->findOrCreateOwnerByNameAndPhone($request->owner_name, $request->owner_phone);
+        $request->merge(["owner_id" => $owner->id]);
 
         $pet = $this->petService->updatePet($id, $request->all());
 
