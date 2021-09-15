@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\OwnerRepositoryInterface;
 use App\Repositories\Contracts\PetRepositoryInterface;
+use App\Repositories\OwnerRepository;
 use App\Repositories\PetRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +21,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PetRepositoryInterface::class,
             PetRepository::class,
+        );
+
+        $this->app->bind(
+            OwnerRepositoryInterface::class,
+            OwnerRepository::class,
         );
     }
 
