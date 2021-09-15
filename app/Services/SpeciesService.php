@@ -4,8 +4,9 @@ namespace App\Services;
 
 use App\Exceptions\SpeciesNotFoundException;
 use App\Repositories\Contracts\SpeciesRepositoryInterface;
+use App\Services\Contracts\SpeciesServiceInterface;
 
-class SpeciesService
+class SpeciesService implements SpeciesServiceInterface
 {
     protected SpeciesRepositoryInterface $speciesRepository;
 
