@@ -15,27 +15,30 @@ class PetController extends Controller
     private OwnerServiceInterface $ownerService;
     private SpeciesServiceInterface $speciesService;
 
-    public function __construct(PetServiceInterface $petService, OwnerServiceInterface $ownerService, SpeciesServiceInterface $speciesService)
-    {
+    public function __construct(
+        PetServiceInterface $petService,
+        OwnerServiceInterface $ownerService,
+        SpeciesServiceInterface $speciesService
+    ) {
         $this->petService = $petService;
         $this->ownerService = $ownerService;
         $this->speciesService = $speciesService;
     }
 
-    public function index() : Response
+    public function index(): Response
     {
         $pets = $this->petService->getAllPets();
         return Response($pets, 200);
     }
 
-    public function show($id) : Response
+    public function show($id): Response
     {
         $pet = $this->petService->getPetById($id);
         if (!$pet) {
-            return Response([],404);
+            return Response([], 404);
         }
 
-        return Response($pet,200);
+        return Response($pet, 200);
     }
 
     public function store(PetRequest $request): Response
@@ -48,7 +51,7 @@ class PetController extends Controller
 
         $pet = $this->petService->createPet($request->all());
 
-        return Response($pet,200);
+        return Response($pet, 200);
     }
 
     public function update(PetRequest $request, $id): Response
@@ -58,18 +61,17 @@ class PetController extends Controller
 
         $pet = $this->petService->updatePet($id, $request->all());
 
-        return Response($pet,200);
+        return Response($pet, 200);
     }
 
-    public function destroy($id) : Response
+    public function destroy($id): Response
     {
         $pet = $this->petService->destroyPet($id);
 
         if (!$pet) {
-            return Response([],404);
+            return Response([], 404);
         }
 
-        return Response([],200);
+        return Response([], 200);
     }
-
 }

@@ -15,22 +15,22 @@ class PetService implements PetServiceInterface
         $this->petRepository = $petRepository;
     }
 
-    public function getAllPets() : object
+    public function getAllPets(): object
     {
         return $this->petRepository->all();
     }
 
-    public function getPetById(int $petId) : ?object
+    public function getPetById(int $petId): ?object
     {
         return $this->petRepository->findById($petId);
     }
 
-    public function createPet(array $petInfo) : object
+    public function createPet(array $petInfo): object
     {
         return $this->petRepository->insert($petInfo);
     }
 
-    public function updatePet(int $petId, array $petInfo) : object
+    public function updatePet(int $petId, array $petInfo): object
     {
         $pet = $this->petRepository->update($petId, $petInfo);
         if (!isset($pet)) {
@@ -39,9 +39,8 @@ class PetService implements PetServiceInterface
         return $pet;
     }
 
-    public function destroyPet(int $petId) : bool
+    public function destroyPet(int $petId): bool
     {
         return $this->petRepository->delete($petId);
     }
-
 }

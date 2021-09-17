@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class PetRepository implements PetRepositoryInterface
 {
-    public function all() : ?Collection
+    public function all(): ?Collection
     {
         $pets = Pet::orderBy('name')
             ->with("species")
@@ -18,7 +18,7 @@ class PetRepository implements PetRepositoryInterface
         return $pets;
     }
 
-    public function findById($id) : ?Pet
+    public function findById($id): ?Pet
     {
         $pet = Pet::find($id);
         if ($pet) {
@@ -30,12 +30,12 @@ class PetRepository implements PetRepositoryInterface
         return $pet;
     }
 
-    public function insert(array $petInfo) : ?Pet
+    public function insert(array $petInfo): ?Pet
     {
         return Pet::create($petInfo)->load('owner')->load('species')->makeHidden(["owner_id", "species_id"])->refresh();
     }
 
-    public function update(int $petId, array $petInfo) : ?Pet
+    public function update(int $petId, array $petInfo): ?Pet
     {
         $pet = Pet::where('id', $petId)->firstOrFail();
         if ($pet) {
@@ -48,9 +48,8 @@ class PetRepository implements PetRepositoryInterface
         return $pet;
     }
 
-    public function delete(int $petId) : bool
+    public function delete(int $petId): bool
     {
         return Pet::where('id', $petId)->delete();
     }
-
 }

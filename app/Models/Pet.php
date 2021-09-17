@@ -27,5 +27,4 @@ class Pet extends Model
     {
         return $this->belongsTo(Species::class);
     }
-
 }

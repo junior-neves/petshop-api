@@ -14,10 +14,8 @@ class OwnerService implements OwnerServiceInterface
         $this->ownerRepository = $ownerRepository;
     }
 
-    public function findOrCreateOwnerByNameAndPhone(string $ownerName, string $ownerPhone) : ?object
+    public function findOrCreateOwnerByNameAndPhone(string $ownerName, string $ownerPhone): ?object
     {
         return $this->ownerRepository->findOrCreateByNameAndPhone($ownerName, $ownerPhone);
     }
-
-
 }

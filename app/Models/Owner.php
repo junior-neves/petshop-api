@@ -19,5 +19,4 @@ class Owner extends Model
     {
         return $this->hasMany(Pet::class);
     }
-
 }

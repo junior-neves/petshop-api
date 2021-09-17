@@ -10,7 +10,6 @@ use App\Services\PetService;
 use App\Services\SpeciesService;
 use Illuminate\Support\ServiceProvider;
 
-
 class ServiceServiceProvider extends ServiceProvider
 {
     /**

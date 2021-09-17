@@ -15,7 +15,7 @@ class SpeciesService implements SpeciesServiceInterface
         $this->speciesRepository = $speciesRepository;
     }
 
-    public function getSpeciesById(int $speciesId) : ?object
+    public function getSpeciesById(int $speciesId): ?object
     {
         $species = $this->speciesRepository->findById($speciesId);
         if (!isset($species)) {
