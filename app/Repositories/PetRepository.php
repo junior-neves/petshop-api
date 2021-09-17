@@ -38,12 +38,10 @@ class PetRepository implements PetRepositoryInterface
     public function update(int $petId, array $petInfo): ?Pet
     {
         $pet = Pet::where('id', $petId)->firstOrFail();
-        if ($pet) {
-            $pet->update($petInfo);
-            $pet->load("owner")
-                ->load("species")
-                ->makeHidden(["owner_id", "species_id"]);
-        }
+        $pet->update($petInfo);
+        $pet->load("owner")
+            ->load("species")
+            ->makeHidden(["owner_id", "species_id"]);
 
         return $pet;
     }

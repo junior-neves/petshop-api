@@ -35,7 +35,7 @@ class PetController extends Controller
     {
         $pet = $this->petService->getPetById($id);
         if (!$pet) {
-            return Response([], 404);
+            return Response("", 404);
         }
 
         return Response($pet, 200);
@@ -69,9 +69,9 @@ class PetController extends Controller
         $pet = $this->petService->destroyPet($id);
 
         if (!$pet) {
-            return Response([], 404);
+            return Response("", 404);
         }
 
-        return Response([], 200);
+        return Response("", 200);
     }
 }
