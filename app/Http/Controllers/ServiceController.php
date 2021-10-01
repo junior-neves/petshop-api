@@ -16,4 +16,35 @@ class ServiceController extends Controller
     }
 
 
+    public function index(): Response
+    {
+        //TODO: Lista serviços
+        return Response("", 200);
+    }
+
+    public function show(): Response
+    {
+        //TODO: Lista 1 serviço
+        return Response("", 200);
+    }
+
+    public function store(): Response
+    {
+        //TODO: Armazena serviço
+        return Response("", 200);
+    }
+
+    public function update(): Response
+    {
+        //TODO Atualiza serviço
+        return Response("", 200);
+    }
+
+    public function destroy(): Response
+    {
+        //TODO: Apaga serviço
+        return Response("", 200);
+    }
+
+
 }

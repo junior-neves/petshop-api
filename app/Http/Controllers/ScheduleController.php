@@ -16,4 +16,35 @@ class ScheduleController extends Controller
     }
 
 
+    public function index(): Response
+    {
+        //TODO: Lista agendamentos
+        return Response("", 200);
+    }
+
+    public function show(): Response
+    {
+        //TODO: Lista 1 agendamento
+        return Response("", 200);
+    }
+
+    public function store(): Response
+    {
+        //TODO: Armazena agendamento
+        return Response("", 200);
+    }
+
+    public function update(): Response
+    {
+        //TODO Atualiza agendamento
+        return Response("", 200);
+    }
+
+    public function destroy(): Response
+    {
+        //TODO: Apaga agendamento
+        return Response("", 200);
+    }
+
+
 }
